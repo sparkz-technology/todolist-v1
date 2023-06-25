@@ -1,0 +1,267 @@
+html {
+    background-color: #E4E9FD;
+     background-image: -webkit-linear-gradient(65deg, #A683E3 50%,  #E4E9FD 50%);  
+   min-height: 100%; 
+    font-family: 'helvetica neue';
+  }
+  body{
+    margin: 0%;
+  }
+  h1 {
+    color: #fff;
+    padding: 10px;
+    font-family: 'Ubuntu';
+  }
+          
+  .box {
+    max-width: 600px;
+    margin: 50px auto;
+    background: white;
+    border-radius: 5px;
+    padding-left: 0px;
+    box-shadow: 5px 5px 15px -5px rgba(0, 0, 0, 0.3);
+  }
+  
+  
+  #heading {
+    background-color: #A683E3;
+    text-align: center;
+  }
+  
+  .item {
+    min-height: 70px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #F1F1F1;
+    position: relative;
+  }
+  
+  .item:last-child {
+    border-bottom: 0;
+  }
+  
+  input:checked+p {
+
+    text-decoration: line-through;
+    text-decoration-color: #A683E3;
+  }
+  
+  input[type="checkbox"] {
+    margin: 20px;
+  }
+  
+  .paragraph {
+    margin: 0;
+    padding: 20px;
+    font-size: 20px;
+    font-weight: 200;
+    color: #00204a;
+    min-width: 450px;
+    max-width: 380px;
+  }
+  
+  form.item {
+    text-align: center;
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+ 
+  button.addList {
+    min-height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    border-color: transparent;
+    background-color: #A683E3;
+    color: #fff;
+    font-size: 30px;
+    padding: 6px;
+    border-width: 0;
+    margin: auto;
+
+  }
+  
+  input[type="text"] {
+    text-align: left;
+    height: 60px;
+    top: 10px;
+    border: none;
+    background: transparent;
+    font-size: 20px;
+    font-weight: 200;
+    min-width: 450px;
+    max-width: 380px;
+  }
+  
+  input[type="text"]:focus {
+    outline: none;
+    box-shadow: inset 0 -3px 0 0 #A683E3;
+    text-align: left;
+  }
+  
+  ::placeholder {
+    color: grey;
+    opacity: 1;
+    text-align: center;
+  }
+   
+  .footer {
+    margin: 0;
+    font-size: 14px;
+    color: #ffffff;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+   
+  }
+footer{
+  margin-bottom: 4rem;
+}
+.item-actions {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+button{
+  border: none;
+  background: none;
+}
+.item-actionsEdit{
+  position: absolute;
+  right: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+  
+}
+button.createList{
+    color: #A683E3;
+    border: 0;
+    line-height: 2.5;
+    padding: 0 20px;
+    font-size: 1.3rem;
+    text-align: center;
+    /* color: #fff; */
+    border-radius: 10px;
+    margin: auto;
+}
+.autocomplete {
+  position: relative;
+  display: inline-block;
+}
+
+.autocomplete-items {
+  position: absolute;
+  border: 1px solid #ccc;
+  border-top: none;
+  z-index: 99;
+  top: 100%;
+  left: 0;
+  right: 0;
+}
+
+.autocomplete-items div {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #fff;
+  border-bottom: 1px solid #ccc;
+}
+
+.autocomplete-items div:hover {
+  background-color: #e9e9e9;
+}
+nav {
+  background-color: #f2f2f2;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  display: fixed;
+  background-color: #A683E3;
+  box-shadow: 5px 5px 15px -5px rgba(0, 0, 0, 0.3);
+  height: 2rem;
+  margin-bottom: 4rem;
+ 
+}
+
+.navbar-title {
+  font-weight: bold;
+  font-size: 20px;
+  color:white;
+  font-family: 'Montserrat', sans-serif;
+  padding-left: 1.2rem;
+}
+
+.navbar-menu {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-menu li {
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.navbar-menu li:first-child {
+  margin-left: 0;
+}
+
+.navbar-menu li a {
+  text-decoration: none;
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.navbar-menu li a:hover {
+  text-decoration: none;
+}
+
+.navbar-menu li:last-child {
+  margin-left: 20px;
+  float: right;
+}
+@media only screen and (max-width: 600px) {
+      .box {
+        margin: 20px;
+      }
+
+      .paragraph,
+      input[type="text"],
+      button.addList,
+      button.createList {
+        min-width: auto;
+        max-width: 100%;
+      }
+
+      .paragraph {
+        padding: 10px;
+        font-size: 18px;
+        
+      }
+
+      input[type="text"],
+      button.addList,
+      button.createList {
+        height: 50px;
+        font-size: 16px;
+      }}
+   
+
+@media (max-width: 480px) {
+  /* Adjust styles for screens up to 480px width */
+  
+ 
+ 
+  .paragraph {
+    min-width: auto;
+    max-width: 200px;
+    font-size: 16px;
+   
+  }
+}
+
+
+
+
+
+
+

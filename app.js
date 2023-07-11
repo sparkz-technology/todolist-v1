@@ -4,8 +4,11 @@ const bodyParser = require("body-parser");
 const date = require(__dirname + "/date.js");
 const mongoose = require("mongoose");
 const _ = require("lodash");
-const favicon =require("serve-favicon")
-const path =require("path")
+const favicon = require("serve-favicon");
+const path = require("path");
+const dotenv = require("dotenv");
+// Load the environment variables from the .env file
+dotenv.config();
 // Creating an Express application
 const app = express();
 
@@ -14,10 +17,13 @@ app.use(express.static("public"));
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(favicon(path.join(__dirname, 'public','favicon', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, "public", "favicon", "favicon.ico")));
 
 // Database connection
-mongoose.connect("mongodb+srv://admin-sutharsan:admin@todolistdb.mcxlffk.mongodb.net/todolistDB", { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 // Define Mongoose schema
 const itemsSchema = new mongoose.Schema({
@@ -43,8 +49,7 @@ const defaultItems = [
 // Handling the root route
 app.get("/", function (req, res) {
   const currentDay = date.getDate();
- 
-  
+
   // Finding all items from the collection
   Item.find({})
     .then((foundItems) => {
@@ -58,7 +63,7 @@ app.get("/", function (req, res) {
             console.error("Error saving default items:", err);
             res.redirect("/");
           });
-      } else { 
+      } else {
         res.render("list", { listTitle: currentDay, newList: foundItems });
       }
     })
@@ -66,11 +71,7 @@ app.get("/", function (req, res) {
       console.error("Error finding items:", err);
       res.redirect("/");
     });
-   
-   
 });
-
-
 
 // Handling the POST request for the root route
 app.post("/", function (req, res) {
@@ -80,7 +81,8 @@ app.post("/", function (req, res) {
   const item = new Item({ name: newItem });
 
   if (listName === date.getDate()) {
-    item.save()
+    item
+      .save()
       .then(() => {
         console.log("Item saved successfully");
         res.redirect("/");
@@ -94,7 +96,8 @@ app.post("/", function (req, res) {
       .then((foundList) => {
         if (foundList) {
           foundList.items.push(item);
-          foundList.save()
+          foundList
+            .save()
             .then(() => {
               console.log("Item saved successfully in custom list", listName);
               res.redirect("/" + listName);
@@ -113,8 +116,6 @@ app.post("/", function (req, res) {
         res.redirect("/" + listName);
       });
   }
-  
-
 });
 
 // Handling the delete route
@@ -133,7 +134,10 @@ app.post("/delete", function (req, res) {
         res.redirect("/");
       });
   } else {
-    List.findOneAndUpdate({ name: listName }, { $pull: { items: { _id: checkboxId } } })
+    List.findOneAndUpdate(
+      { name: listName },
+      { $pull: { items: { _id: checkboxId } } }
+    )
       .then(() => {
         console.log("Successfully deleted item from custom list", listName);
         res.redirect("/" + listName);
@@ -144,7 +148,6 @@ app.post("/delete", function (req, res) {
       });
   }
 });
-
 
 // Handling the update route
 app.post("/update", (req, res) => {
@@ -167,12 +170,18 @@ app.post("/update", (req, res) => {
     List.findOne({ name: listTitle })
       .then((foundList) => {
         if (foundList) {
-          const itemToUpdate = foundList.items.find((item) => item._id.toString() === buttonValue);
+          const itemToUpdate = foundList.items.find(
+            (item) => item._id.toString() === buttonValue
+          );
           if (itemToUpdate) {
             itemToUpdate.name = newItemName;
-            foundList.save()
+            foundList
+              .save()
               .then(() => {
-                console.log("Item updated successfully in custom list", listTitle);
+                console.log(
+                  "Item updated successfully in custom list",
+                  listTitle
+                );
                 res.redirect("/" + listTitle); // Redirect to the custom list route
               })
               .catch((err) => {
@@ -213,7 +222,7 @@ app.post("/deleteList", function (req, res) {
 // Handling custom list routes
 app.get("/:customListName", function (req, res) {
   const customListName = _.capitalize(req.params.customListName);
-  
+
   List.findOne({ name: customListName })
     .then((foundList) => {
       if (!foundList) {
@@ -221,7 +230,8 @@ app.get("/:customListName", function (req, res) {
           name: customListName,
           items: defaultItems,
         });
-        list.save()
+        list
+          .save()
           .then(() => {
             console.log("New list created and saved!");
             res.redirect("/" + customListName);
@@ -231,24 +241,27 @@ app.get("/:customListName", function (req, res) {
             res.redirect("/");
           });
       } else {
-        res.render("list", { listTitle: foundList.name, newList: foundList.items });
+        res.render("list", {
+          listTitle: foundList.name,
+          newList: foundList.items,
+        });
       }
     })
     .catch((err) => {
       console.error("Error finding list:", err);
       res.redirect("/");
-    });  
+    });
 });
-app.get('/api/names', (req, res) => {
+app.get("/api/names", (req, res) => {
   List.find({})
-    .select('name')
-    .then(lists => {
-      const names = lists.map(list => list.name);
+    .select("name")
+    .then((lists) => {
+      const names = lists.map((list) => list.name);
       res.json(names);
     })
-    .catch(err => {
+    .catch((err) => {
       console.error(err);
-      res.status(500).json({ error: 'Internal server error' });
+      res.status(500).json({ error: "Internal server error" });
     });
 });
 

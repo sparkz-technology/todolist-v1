@@ -1,0 +1,63 @@
+<%- include('header'); -%>
+<nav>
+    <div class="navbar-title">Todo List</div>
+    <ul class="navbar-menu">
+      <li><a href="/">Home</a></li>
+      </ul>
+  </nav>
+   <div class="box" id="heading">
+    
+        <h1><%= listTitle %> </h1>
+     
+   </div>
+   <div class="box createList">
+    <form class="item" action="/" method="get" id="myForm">
+        <div class="autocomplete">
+
+            <input type="text" id="listInput" placeholder="Search & Create" required autocomplete="off" >
+            <div id="autocomplete-list" class="autocomplete-items"></div>
+
+          </div>
+        <button class="createList" type="submit"><i class="fa-solid fa-arrows-rotate"></i></button>
+        
+        <button class="createList" form="deleteList"><i class="fa-sharp fa-solid fa-trash"></i></button>
+
+      </form>
+      <form id="deleteList" action="/deleteList" method="post">
+        <input type="hidden" name="listTitle" value="<%= listTitle %>">
+      </form>
+     
+</div>
+    <div class="box">
+        <% newList.forEach((item) => { %>
+            <form action="/delete" method="post">
+                <div class="item">
+                    <input type="checkbox" name="checkbox" value="<%= item._id %>">
+                    <p class="paragraph" id="paraTag<%= item._id %>"><%= item.name %></p>
+                    <input type="hidden" name="listName" value="<%= listTitle %>">
+                    <button class="item-actions" type="submit" name="checkbox" value="<%= item._id %>"><i class="fa-solid fa-x"></i></button>
+                    <button id="editButton<%= item._id %>" type="button" class="item-actionsEdit" onclick="performActions(event, '<%= item._id %>', '<%= listTitle %>')">
+                        <i class="fa-solid fa-edit " id="fa-edit<%= item._id %>"></i>
+                      </button>
+                      <input id="editInput<%= item._id %>" type="text" style="display:none">
+                </div>
+            </form>
+        <% }) %>
+        
+        <form class="item" action="/" method="post">
+            <input type="text" name="itemList" placeholder="New Item" required autocomplete="off">
+            <button class="addList" type="submit" name="list" value="<%= listTitle %>">+</button>
+        </form>
+        
+    </div>
+    </div>
+   
+
+    
+    <%- include('footer'); -%>
+
+
+
+
+
+<script src="script/script.js"></script>

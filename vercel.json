@@ -1,5 +1,7 @@
 {
   "version": 2,
+  "framework": "nodejs",
+  "main": "index.js",
   "builds": [
     {
       "src": "index.js",

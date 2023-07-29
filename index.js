@@ -64,7 +64,7 @@ app.get("/", function (req, res) {
             res.redirect("/");
           });
       } else {
-        res.render("index", { listTitle: currentDay, newList: foundItems });
+        res.render("index.ejs", { listTitle: currentDay, newList: foundItems });
       }
     })
     .catch((err) => {
@@ -241,7 +241,7 @@ app.get("/:customListName", function (req, res) {
             res.redirect("/");
           });
       } else {
-        res.render("index", {
+        res.render("index.ejs", {
           listTitle: foundList.name,
           newList: foundList.items,
         });

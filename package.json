@@ -2,10 +2,12 @@
   "name": "todolist-v1",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "build": "npm install"
   },
   "author": "sutharsan_sparkz",
   "license": "ISC",
